@@ -1,0 +1,25 @@
+div.gallery {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 150px;
+    height: 200px;
+    overflow: hidden;
+    o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+div.gallery:hover {
+    border: 1px solid #777;
+    background-color: lightblue;
+}
+
+div.gallery img {
+    width: 150px;
+    height: 150px;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+}

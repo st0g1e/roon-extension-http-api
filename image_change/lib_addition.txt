@@ -1,0 +1,17 @@
+RoonApiImage.prototype.get_image_html = function(image_key, scale, height, width, format, cb) {
+    var opts = Object.assign({
+        image_key:    	image_key,
+        scale:		scale,
+	width:		width,
+	height:		height,
+	format:		format	
+    });
+
+    this.core.moo.send_request(SVCNAME+"/get_image",
+                               opts,
+                               (msg, body) => {
+                                   if (msg && msg.name == "Success") cb(false, msg.content_type, body);
+                                   else cb(msg ? msg.name : "NetworkError");
+                               });
+};
+

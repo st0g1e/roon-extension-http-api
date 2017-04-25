@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <script src="./timers.js"></script>
+    <link rel="stylesheet" type="text/css" href="./timers.css" />
+  </head>
+  <body
+    <h1>roon timer</h1>
+    <hr>
+    <p>
+    <form>
+      Add By Timer:
+      <p>
+      <div>
+        <label for="zone_id">zone:</label>
+        <select id="zoneListByTimer"></select> 
+      </div>
+
+      <div>
+        <label for="hour">hour:</label>
+        <input type="text" id="hour" name="hour"/>
+      </div>
+      <div>
+        <label for="minute">minute:</label>
+        <input type="text" id="minute" name="minute"/>
+      </div>
+      <div>
+        <label for="second">second:</label>
+        <input type="text" id="second" name="second"/>
+      </div>
+      <div>
+        <label for="command">command:</label>
+        <select name="command">
+          <option value="play" selected>play</option>
+          <option value="pause">pause</option>
+        </select>
+      </div>
+      <div class="button">
+        <input type="button" value="add" onclick="addByTimer(this.form)"\>
+      </div>
+    </form>
+    <p><p>
+    <form>
+      Add By Date/Time
+      <p>
+      <div>
+        <label for="zone_id">zone:</label>
+        <select id="zoneListByDate"></select>
+      </div>
+      <div>
+        <label for="day">day:</label>
+        <input type="text" id="day" name="day"/>
+      </div>
+      <div>
+        <label for="month">month:</label>
+        <select id="monthList"></select>
+      </div>
+      <div>
+        <label for="year">year:</label>
+        <input type="text" id="year" name="year"/>
+      </div>
+      <div>
+        <label for="hour">hour:</label>
+        <input type="text" id="hour" name="hour"/>
+      </div>
+      <div>
+        <label for="minute">minute:</label>
+        <input type="text" id="minute" name="minute"/>
+      </div>
+      <div>
+        <label for="command">command:</label>
+        <select name="command">
+          <option value="play" selected>play</option>
+          <option value="pause">pause</option>
+        </select>
+      </div>
+      <div class="button">
+        <input type="button" value="add" onclick="addByDateTime(this.form)"\>
+      </div>
+    </form>
+    <center> 
+       <div id="timerList"></div>
+    </center>
+  </body>
+</html>

@@ -151,7 +151,7 @@ exports.getImage = function(req, res) {
 };
 
 function get_image(image_key, scale, width, height, format, res) {
-   core.services.RoonApiImage.get_image_html(image_key, scale, width, height, format, function(cb, contentType, body) {
+   core.services.RoonApiImage.get_image(image_key, {scale, width, height, format}, function(cb, contentType, body) {
   
       res.contentType = contentType;
  

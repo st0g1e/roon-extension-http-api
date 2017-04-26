@@ -44,10 +44,6 @@ v5.10.1
   ```
   npm install
   ```
-* Fix image APIs
-  ```
-  sh update_image_api.sh
-  ```
 * (Optional) To remove the running log
   Comment console.log lines at
   - node_modules/node-roon-api/lib.js

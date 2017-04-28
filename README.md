@@ -83,33 +83,96 @@ http://[IPAddress]:[Port]/roonAPI/[APIName]
 The APIs are:
 * Transport APIs
   - getCore
+  ```
+     http://localhost:3001/roonAPI/getCore
+  ```
   - listZone
+  ```
+     http://localhost:3001/roonAPI/listZones
+  ```
   - getZone
+  ```
+     http://localhost:3001/roonAPI/getZone?zoneId=[zoneId as found from listZones]
+  ```
   - play_pause
+  ```
+     http://localhost:3001/roonAPI/play_pause?zoneId=[zoneId as found from listZones]
+  ```
   - play
+  ```
+     http://localhost:3001/roonAPI/play?zoneId=[zoneId as found from listZones]
+  ```
   - pause
+  ```
+     http://localhost:3001/roonAPI/pause?zoneId=[zoneId as found from listZones]
+  ```
   - stop
+  ```
+     http://localhost:3001/roonAPI/stop?zoneId=[zoneId as found from listZones]
+  ```
   - previous
+  ```
+     http://localhost:3001/roonAPI/previous?zoneId=[zoneId as found from listZones]
+  ```
   - next
+  ```
+     http://localhost:3001/roonAPI/next?zoneId=[zoneId as found from listZones]
+  ```
   - change_volume
+  ```
+     http://localhost:3001/roonAPI/change_volume?volume=[Volume % from 0 to 100]&outputId=[outputId as found from listZones]
+  ```
   
 * Image APIs
   - getImage
+  ```
+     http://localhost:3001/roonAPI/getImage?image_key=[image_key as found from the browser APIs]
+  ```
   - getMediumImage
+  ```
+     http://localhost:3001/roonAPI/getMediumImage?image_key=[image_key as found from the browser APIs]
+  ```
   - getIcon
+  ```
+     http://localhost:3001/roonAPI/getIcon?image_key=[image_key as found from the browser APIs]
+  ```
   
 * Browser APIs  
-  - listByItemKey
-  - listSearch
-  - goUp
-  - goHome
-  - listGoPage
-  - listRefresh
+  - listByItemKey (list_size always returns 100)
+  ```
+     http://localhost:3001/roonAPI/listByItemKey?zoneId=[zoneId]&item_key=[item_key from Browser APIs]&page=[page number]&list_size=[number of return per page]
+  ```
+  - listSearch (list_size always returns 100)
+  ```
+     http://localhost:3001/roonAPI/listSearch?zoneId=[zoneId]&toSearch=[search string]&list_size=[hits per page]
+  ```
+  - goUp (list_size always returns 100)
+  ```
+     http://localhost:3001/roonAPI/goUp?zoneId=[zoneId]&list_size=[hits per page]
+  ```
+  - goHome (list_size always returns 100)
+  ```
+     http://localhost:3001/roonAPI/goHome?zoneId=[zoneId]&list_size=[hits per page]
+  ```
+  - listGoPage (list_size always returns 100)
+  ```
+     http://localhost:3001/roonAPI/listGoPage?page=[page number]&list_size=[hits per page]
+  ```
+ 
 
 * Timers
   - getTimers
+  ```
+     http://localhost:3001/roonAPI/getTimers
+  ```
   - addTimer
+  ```
+     http://localhost:3001/roonAPI/addTimer?zoneId=[zoneId]&time=[unix time in millisecond]&command=[play|[pause]&isRepeat=[0|1]
+  ```
   - removeTimer
+  ```
+     http://localhost:3001/roonAPI/removeTimer?zoneId=[zoneId]&time=[unix time in milliseconds]&command=[play|pause]&isRepeat=[0|1]
+  ```
 
 ## Examples
 There are several examples that calls the APIs above under the htmls directory.

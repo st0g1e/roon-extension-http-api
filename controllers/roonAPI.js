@@ -112,21 +112,21 @@ exports.pause = function(req, res) {
 exports.previous = function(req, res) {
     core.services.RoonApiTransport.control(zones[req.query['zoneId']], 'previous');
 
-    setTimeout(function(){
+//    setTimeout(function(){
        res.send({
          "zone": req.headers.referer
        })
-    }, 2000);
+//    }, 2000);
 };
 
 exports.next = function(req, res) {
   core.services.RoonApiTransport.control(zones[req.query['zoneId']], 'next');
 
-    setTimeout(function(){
+//    setTimeout(function(){
        res.send({
          "zone": core.services.RoonApiTransport.zone_by_zone_id(req.query['zoneId'])
        })
-    }, 2000);
+//    }, 2000);
 };
 
 exports.change_volume = function(req, res) {

@@ -1,4 +1,6 @@
 var topUrl = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
+var callInterval;
+var timeInterval = 2000;
 
 function ajax_get(url, callback) {
     xmlhttp = new XMLHttpRequest();
@@ -26,8 +28,25 @@ ajax_get(topUrl + '/roonAPI/listZones', function(data) {
     html += "</ul>";
     document.getElementById("zoneList").innerHTML = html;
 
+    startInterval();
     updateSelected();
 });
+
+function startInterval() {
+  callInterval = setInterval(function() { 
+    var zone_id = document.getElementById("zoneList").options[document.getElementById("zoneList").selectedIndex].value;
+
+    ajax_get(topUrl + '/roonAPI/getZone?zoneId=' + zone_id, function(data) {
+      updateSelected(); 
+    });
+
+  }, 5000);
+}
+
+function stopInterval() {
+  clearInterval( callInterval );
+}
+
 
 function updateSelected() {
   var zone_id = document.getElementById("zoneList").options[document.getElementById("zoneList").selectedIndex].value;
@@ -77,7 +96,7 @@ function show_zone(zone) {
   html += "<form>\n";
   html += "<input type=\"button\" value=\"prev\" onclick=\"goPrev(\'" + zone.zone_id + "\')\"/>\n";
   html += "<input type=\"button\" value=\"play/pause\" onclick=\"goPlayPause(\'" + zone.zone_id + "\')\"/>\n";
-  html += "<input type=\"button\" value=\"prev\" onclick=\"goNext(\'" + zone.zone_id + "\')\"/>\n";
+  html += "<input type=\"button\" value=\"next\" onclick=\"goNext(\'" + zone.zone_id + "\')\"/>\n";
   html += "</form>\n";
   html += "</center>\n";
 

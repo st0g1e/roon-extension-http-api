@@ -20,8 +20,8 @@ module.exports = function(app) {
     app.get('/roonAPI/listRefresh', apis.listRefresh);
     app.get('/roonAPI/getMediumImage', apis.getMediumImage);
     app.get('/roonAPI/getIcon', apis.getIcon);
+    app.get('/roonAPI/getOriginalImage', apis.getOriginalImage);
     app.get('/roonAPI/getTimers', apis.getTimers);
     app.get('/roonAPI/addTimer', apis.addTimer);
     app.get('/roonAPI/removeTimer', apis.removeTimer);
 };
-

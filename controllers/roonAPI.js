@@ -6,35 +6,36 @@ var RoonApiBrowse    = require("node-roon-api-browse");
 
 var path = require('path');
 
- 
+
 var core;
 var zones = [];
 
 var timeout;
 
 var roon = new RoonApi({
-   extension_id:        'st0g1e.roon-http-api',
-   display_name:        "roon-http-api",
-   display_version:     "0.0.1",
-   publisher:           'bastian ramelan',
-   email:		'st0g1e@yahoo.com',
+   extension_id     : "st0g1e.roon-http-api",
+   display_name     : "roon-http-api",
+   display_version  : "1.0.1",
+   publisher        : "bastian ramelan",
+   email            :	"st0g1e@yahoo.com",
+   log_level        : "none",
 
    core_paired: function(core_) {
-	core = core_;
+     core = core_;
 
-	let transport = core_.services.RoonApiTransport;
+     let transport = core_.services.RoonApiTransport;
 
-	core.services.RoonApiTransport.subscribe_zones((response, msg) => {
-            if (response == "Subscribed") {
-                let curZones = msg.zones.reduce((p,e) => (p[e.zone_id] = e) && p, {});
-                zones = curZones;
-            } else if (response == "Changed") {
-                var z;
-                if (msg.zones_removed) msg.zones_removed.forEach(e => delete(zones[e.zone_id]));
-                if (msg.zones_added)   msg.zones_added  .forEach(e => zones[e.zone_id] = e);
-                if (msg.zones_changed) msg.zones_changed.forEach(e => zones[e.zone_id] = e);
-            }
-        });
+   	 core.services.RoonApiTransport.subscribe_zones((response, msg) => {
+       if (response == "Subscribed") {
+         let curZones = msg.zones.reduce((p,e) => (p[e.zone_id] = e) && p, {});
+         zones = curZones;
+       } else if (response == "Changed") {
+         var z;
+         if (msg.zones_removed) msg.zones_removed.forEach(e => delete(zones[e.zone_id]));
+         if (msg.zones_added)   msg.zones_added  .forEach(e => zones[e.zone_id] = e);
+         if (msg.zones_changed) msg.zones_changed.forEach(e => zones[e.zone_id] = e);
+       }
+     });
    },
 
    core_unpaired: function(core_) {
@@ -75,7 +76,7 @@ exports.getZone = function(req, res) {
     "zone": core.services.RoonApiTransport.zone_by_zone_id(req.query['zoneId'])
   })
 };
- 
+
 exports.play_pause = function(req, res) {
     core.services.RoonApiTransport.control(zones[req.query['zoneId']], 'playpause');
 
@@ -96,7 +97,7 @@ exports.play = function(req, res) {
     core.services.RoonApiTransport.control(zones[req.query['zoneId']], 'play');
 
    res.send({
-    "zone": zones[req.query['zoneId']] 
+    "zone": zones[req.query['zoneId']]
   })
 };
 
@@ -134,7 +135,7 @@ exports.change_volume = function(req, res) {
 
 
   res.send({
-    "status": "success" 
+    "status": "success"
   })
 };
 
@@ -150,12 +151,22 @@ exports.getImage = function(req, res) {
    get_image( req.query['image_key'], "fit", 300, 200, "image/jpeg", res);
 };
 
+exports.getOriginalImage = function(req, res) {
+  core.services.RoonApiImage.get_image(req.query['image_key'], function(cb, contentType, body) {
+
+     res.contentType = contentType;
+
+     res.writeHead(200, {'Content-Type': 'image/jpeg' });
+     res.end(body, 'binary');
+  });
+};
+
 function get_image(image_key, scale, width, height, format, res) {
    core.services.RoonApiImage.get_image(image_key, {scale, width, height, format}, function(cb, contentType, body) {
-  
+
       res.contentType = contentType;
- 
-      res.writeHead(200, {'Content-Type': 'image/gif' });
+
+      res.writeHead(200, {'Content-Type': 'image/jpeg' });
       res.end(body, 'binary');
    });
 };
@@ -191,7 +202,7 @@ exports.goHome = function(req, res) {
    refresh_browse( req.query['zoneId'], { pop_all: true }, 1, req.query['list_size'], function(myList) {
 
    res.send({
-     "list": myList 
+     "list": myList
     })
   });
 };
@@ -221,7 +232,7 @@ exports.listRefresh = function(req, res) {
 exports.addTimer = function(req, res) {
   save_timer(req.query['zoneId'], req.query['time'], req.query['command'], req.query['isRepeat']);
 
-  run_later(); 
+  run_later();
   var timers = get_timers();
 
   res.send({
@@ -251,8 +262,8 @@ exports.removeTimer = function(req, res) {
       break;
     }
   }
-  
-  roon.save_config("my_timers", timers); 
+
+  roon.save_config("my_timers", timers);
 
   run_later();
   var timers = get_timers();
@@ -263,7 +274,7 @@ exports.removeTimer = function(req, res) {
 };
 
 
-function refresh_browse(zone_id, opts, page, listPerPage, cb) { 
+function refresh_browse(zone_id, opts, page, listPerPage, cb) {
     var items = [];
     opts = Object.assign({
         hierarchy:          "browse",
@@ -322,7 +333,7 @@ function save_timer(zoneId, time, command, isRepeat) {
   if ( timers == null ) {
     timers = [];
   }
- 
+
   var toAdd = {}
   toAdd.zoneId = zoneId;
   toAdd.time = time;
@@ -330,8 +341,8 @@ function save_timer(zoneId, time, command, isRepeat) {
   toAdd.isRepeat = isRepeat;
 
   timers.push(toAdd);
-  
-  roon.save_config("my_timers", timers); 
+
+  roon.save_config("my_timers", timers);
   refresh_timer();
 }
 
@@ -384,7 +395,7 @@ function run_later() {
         run_later();
       }, lapse);
     }
-  } 
+  }
 }
 
 function playZone(zoneId) {

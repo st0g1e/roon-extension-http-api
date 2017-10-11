@@ -3,7 +3,7 @@ var path = require('path');
 
 var app = express();
 
-const PORT=3001; 
+const PORT=3001;
 
 app.use(express.static(path.join(__dirname, 'htmls')));
 
@@ -18,4 +18,4 @@ require('./routes')(app);
 
 app.listen(PORT);
 
-console.log('Listening on port' + PORT);
+console.log('Listening on port: ' + PORT);

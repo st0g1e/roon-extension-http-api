@@ -3,6 +3,7 @@ module.exports = function(app) {
 
     app.get('/roonAPI/getCore', apis.getCore);
     app.get('/roonAPI/listZones', apis.listZones);
+    app.get('/roonAPI/listOutputs', apis.listOutputs);
     app.get('/roonAPI/getZone', apis.getZone);
     app.get('/roonAPI/play_pause', apis.play_pause);
     app.get('/roonAPI/stop', apis.stop);

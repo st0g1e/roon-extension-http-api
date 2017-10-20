@@ -8,33 +8,19 @@ var path = require('path');
 
 
 var core;
-var zones = [];
-
 var timeout;
 
 var roon = new RoonApi({
    extension_id     : "st0g1e.roon-http-api",
    display_name     : "roon-http-api",
-   display_version  : "1.0.1",
+   display_version  : "1.0.2",
    publisher        : "bastian ramelan",
    email            :	"st0g1e@yahoo.com",
    log_level        : "none",
 
    core_paired: function(core_) {
      core = core_;
-
-     let transport = core_.services.RoonApiTransport;
-
    	 core.services.RoonApiTransport.subscribe_zones((response, msg) => {
-       if (response == "Subscribed") {
-         let curZones = msg.zones.reduce((p,e) => (p[e.zone_id] = e) && p, {});
-         zones = curZones;
-       } else if (response == "Changed") {
-         var z;
-         if (msg.zones_removed) msg.zones_removed.forEach(e => delete(zones[e.zone_id]));
-         if (msg.zones_added)   msg.zones_added  .forEach(e => zones[e.zone_id] = e);
-         if (msg.zones_changed) msg.zones_changed.forEach(e => zones[e.zone_id] = e);
-       }
      });
    },
 
@@ -65,12 +51,24 @@ exports.getCore = function(req, res){
 };
 
 exports.listZones = function(req, res) {
-  res.send({
-    "zones": zones
-//     "zones":  core.services.RoonApiTransport.get_zones()
-  })
+    core.services.RoonApiTransport.get_zones((iserror, body) => {
+        if (!iserror) {
+            res.send({
+                "zones": body.zones
+            })
+        }
+    })
 };
 
+exports.listOutputs = function(req, res) {
+    core.services.RoonApiTransport.get_outputs((iserror, body) => {
+        if (!iserror) {
+            res.send({
+                "outputs": body.outputs
+            })
+        }
+    })
+};
 exports.getZone = function(req, res) {
   res.send({
     "zone": core.services.RoonApiTransport.zone_by_zone_id(req.query['zoneId'])
@@ -78,7 +76,7 @@ exports.getZone = function(req, res) {
 };
 
 exports.play_pause = function(req, res) {
-    core.services.RoonApiTransport.control(zones[req.query['zoneId']], 'playpause');
+    core.services.RoonApiTransport.control(req.query['zoneId'], 'playpause');
 
    res.send({
     "status": "success"
@@ -86,7 +84,7 @@ exports.play_pause = function(req, res) {
 };
 
 exports.stop = function(req, res) {
-    core.services.RoonApiTransport.control(zones[req.query['zoneId']], 'stop');
+    core.services.RoonApiTransport.control(req.query['zoneId'], 'stop');
 
    res.send({
     "status": "success"
@@ -94,15 +92,15 @@ exports.stop = function(req, res) {
 };
 
 exports.play = function(req, res) {
-    core.services.RoonApiTransport.control(zones[req.query['zoneId']], 'play');
+    core.services.RoonApiTransport.control(req.query['zoneId'], 'play');
 
    res.send({
-    "zone": zones[req.query['zoneId']]
+    "zone": "Success"
   })
 };
 
 exports.pause = function(req, res) {
-    core.services.RoonApiTransport.control(zones[req.query['zoneId']], 'pause');
+    core.services.RoonApiTransport.control(req.query['zoneId'], 'pause');
 
    res.send({
     "status": "success"
@@ -111,7 +109,7 @@ exports.pause = function(req, res) {
 
 
 exports.previous = function(req, res) {
-    core.services.RoonApiTransport.control(zones[req.query['zoneId']], 'previous');
+    core.services.RoonApiTransport.control(req.query['zoneId'], 'previous');
 
 //    setTimeout(function(){
        res.send({
@@ -121,7 +119,7 @@ exports.previous = function(req, res) {
 };
 
 exports.next = function(req, res) {
-  core.services.RoonApiTransport.control(zones[req.query['zoneId']], 'next');
+  core.services.RoonApiTransport.control(req.query['zoneId'], 'next');
 
 //    setTimeout(function(){
        res.send({
@@ -315,9 +313,9 @@ function load_browse(page, listPerPage, cb) {
 
 function runCommand(command, zone_id) {
   if ( command == "play" ) {
-    core.services.RoonApiTransport.control(zones[req.query['zoneId']], 'play');
+    core.services.RoonApiTransport.control(req.query['zoneId'], 'play');
   } else if ( command == "pause" ) {
-    core.services.RoonApiTransport.control(zones[req.query['zoneId']], 'pause');
+    core.services.RoonApiTransport.control(req.query['zoneId'], 'pause');
   }
 }
 

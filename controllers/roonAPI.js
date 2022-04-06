@@ -13,7 +13,7 @@ var timeout;
 var roon = new RoonApi({
    extension_id     : "st0g1e.roon-http-api",
    display_name     : "roon-http-api",
-   display_version  : "1.0.2",
+   display_version  : "1.0.3",
    publisher        : "bastian ramelan",
    email            :	"st0g1e@yahoo.com",
    log_level        : "none",
@@ -222,6 +222,36 @@ exports.listRefresh = function(req, res) {
      "list": myList
     })
   });
+};
+
+
+// GROUP - UNGROUP
+
+exports.group = function(req, res) {
+    core.services.RoonApiTransport.group_outputs(req.body.output);
+
+   res.send({
+    "status": "success"
+  })
+};
+
+exports.ungroup = function(req, res) {
+    core.services.RoonApiTransport.ungroup_outputs(req.body.output);
+
+   res.send({
+    "status": "success"
+  })
+};
+
+
+// TRANSFERS
+
+exports.transferZone = function(req, res) {
+  core.services.RoonApiTransport.transfer_zone(req.query['fromZoneId'], req.query['toZoneId']);
+
+    res.send({
+     "status": "success"
+   })
 };
 
 

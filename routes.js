@@ -25,4 +25,7 @@ module.exports = function(app) {
     app.get('/roonAPI/getTimers', apis.getTimers);
     app.get('/roonAPI/addTimer', apis.addTimer);
     app.get('/roonAPI/removeTimer', apis.removeTimer);
+    app.post('/roonAPI/group', apis.group);
+    app.post('/roonAPI/ungroup', apis.ungroup);
+    app.get('/roonAPI/transferZone', apis.transferZone);
 };

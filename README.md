@@ -54,10 +54,10 @@ v5.10.1
   ```
   node .
   ```
-  
+
 4. Enable the extension
    In Roon, go to Settings -> Extensions and click on the "enable" button next to the roon-extension-http-api extension details.
-   
+
 ** Testing in Browser
 
 You should now the IP address where the extension is (for the same computer, you can use localhost. the default port is 3001.
@@ -118,7 +118,11 @@ The APIs are:
   ```
      http://localhost:3001/roonAPI/change_volume?volume=[Volume % from 0 to 100]&outputId=[outputId as found from listZones]
   ```
-  
+  - transfer zone
+  ```
+     http://localhost:3001/roonAPI/transferZone?fromZoneId=[source zoneId]&toZoneId=[destination zoneId]
+  ```
+
 * Image APIs
   - getImage
   ```
@@ -132,7 +136,7 @@ The APIs are:
   ```
      http://localhost:3001/roonAPI/getIcon?image_key=[image_key as found from the browser APIs]
   ```
-  
+
 * Browser APIs  
   - listByItemKey (list_size always returns 100)
   ```
@@ -154,7 +158,35 @@ The APIs are:
   ```
      http://localhost:3001/roonAPI/listGoPage?page=[page number]&list_size=[hits per page]
   ```
- 
+
+  * Group / Ungroup APIs (Input Type: POST)
+    - group, post parameter is JSON array name "output"
+    ```
+       http://localhost:3001/roonAPI/group
+
+       Parameter:
+
+       {
+         "output": [
+          "1701004f66ca89348d7baf26a8ca037bc5b1",
+          "17016922fd031e4440ed273671f3fee578a6"
+        ]
+      }
+    ```
+
+    - ungroup, post parameter is JSON array name "output"
+    ```
+       http://localhost:3001/roonAPI/ungroup
+
+       Parameter:
+
+       {
+         "output": [
+          "1701004f66ca89348d7baf26a8ca037bc5b1",
+          "17016922fd031e4440ed273671f3fee578a6"
+        ]
+      }
+    ```
 
 * Timers
   - getTimers
@@ -175,8 +207,7 @@ There are several examples that calls the APIs above under the htmls directory.
 
 URL: http://localhost:3001/player.html
 
-These are: 
+These are:
 - player.html (simple player with play/pause, next, previous and volume slider where available)
 - browser.html (simple viewer list, can play the songs)
 - timers.html (simple timers to play/pause songs)
-

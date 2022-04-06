@@ -2,6 +2,10 @@ var express = require('express');
 var path = require('path');
 
 var app = express();
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const PORT=3001;
 

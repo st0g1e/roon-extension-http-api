@@ -137,6 +137,15 @@ exports.change_volume = function(req, res) {
   })
 };
 
+exports.change_volume_rel = function(req, res) {
+  core.services.RoonApiTransport.change_volume(req.query['outputId'], "relative", req.query['volume']);
+
+
+  res.send({
+    "status": "success"
+  })
+};
+
 exports.getMediumImage = function( req, res ) {
   get_image( req.query['image_key'], "fit", 300, 200, "image/jpeg", res);
 };

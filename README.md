@@ -118,6 +118,10 @@ The APIs are:
   ```
      http://localhost:3001/roonAPI/change_volume?volume=[Volume % from 0 to 100]&outputId=[outputId as found from listZones]
   ```
+  - change_volume_relative
+  ```
+     http://localhost:3001/roonAPI/change_volume_relative?volume=[volume change from current]&outputId=[outputId as found from listZones]
+  ```
   - transfer zone
   ```
      http://localhost:3001/roonAPI/transferZone?fromZoneId=[source zoneId]&toZoneId=[destination zoneId]

@@ -13,7 +13,7 @@ var timeout;
 var roon = new RoonApi({
    extension_id     : "st0g1e.roon-http-api",
    display_name     : "roon-http-api",
-   display_version  : "1.0.3",
+   display_version  : "1.0.4",
    publisher        : "bastian ramelan",
    email            :	"st0g1e@yahoo.com",
    log_level        : "none",
@@ -130,6 +130,15 @@ exports.next = function(req, res) {
 
 exports.change_volume = function(req, res) {
   core.services.RoonApiTransport.change_volume(req.query['outputId'], "absolute", req.query['volume']);
+
+
+  res.send({
+    "status": "success"
+  })
+};
+
+exports.change_volume_relative = function(req, res) {
+  core.services.RoonApiTransport.change_volume(req.query['outputId'], "relative", req.query['volume']);
 
 
   res.send({

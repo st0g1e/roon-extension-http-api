@@ -1,7 +1,7 @@
 {
   "name"                      : "roon-http-api",
   "description"               : "st0g1e.roon-http-api",
-  "version"                   : "1.0.3",
+  "version"                   : "1.0.4",
   "main"                      : "server.js",
   "private"                   : true,
   "dependencies": {

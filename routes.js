@@ -10,6 +10,7 @@ module.exports = function(app) {
     app.get('/roonAPI/previous', apis.previous);
     app.get('/roonAPI/next', apis.next);
     app.get('/roonAPI/change_volume', apis.change_volume);
+    app.get('/roonAPI/change_volume_relative', apis.change_volume_relative);
     app.get('/roonAPI/getImage', apis.getImage);
     app.get('/roonAPI/play', apis.play);
     app.get('/roonAPI/pause', apis.pause);
